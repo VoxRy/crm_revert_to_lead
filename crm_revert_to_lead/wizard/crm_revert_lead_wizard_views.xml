@@ -6,8 +6,8 @@
         <field name="arch" type="xml">
             <form string="Revert to Lead">
                 <sheet>
-                    <p>Are you sure you want to revert this opportunity back to a lead?</p>
-                    <p>Changing the type back to Lead will preserve all notes, activities, and messages, but the record will be moved out of the pipeline and back to the Leads list.</p>
+                    <p>Are you sure you want to revert the selected opportunity(ies) back to lead(s)?</p>
+                    <p>Changing the type back to Lead will preserve all notes, activities, and messages, but the records will be moved out of the pipeline and back to the Leads list.</p>
                     <field name="lead_id" invisible="1"/>
                 </sheet>
                 <footer>
@@ -16,5 +16,15 @@
                 </footer>
             </form>
         </field>
+    </record>
+
+    <!-- Action to open the wizard from the "Action" menu -->
+    <record id="action_crm_revert_lead_bulk" model="ir.actions.act_window">
+        <field name="name">Revert to Lead</field>
+        <field name="res_model">crm.revert.lead.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="crm.model_crm_lead"/>
+        <field name="binding_view_types">list</field>
     </record>
 </odoo>
