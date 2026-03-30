@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_revert_lead_wizard_form" model="ir.ui.view">
+        <field name="name">crm.revert.lead.wizard.form</field>
+        <field name="model">crm.revert.lead.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Revert to Lead">
+                <sheet>
+                    <p>Are you sure you want to revert this opportunity back to a lead?</p>
+                    <p>Changing the type back to Lead will preserve all notes, activities, and messages, but the record will be moved out of the pipeline and back to the Leads list.</p>
+                    <field name="lead_id" invisible="1"/>
+                </sheet>
+                <footer>
+                    <button name="action_confirm_revert" string="Confirm" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
