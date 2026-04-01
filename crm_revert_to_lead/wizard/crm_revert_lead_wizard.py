@@ -38,7 +38,27 @@ class CrmRevertLeadWizard(models.TransientModel):
                 }
             }
 
-        valid_leads.write({'type': 'lead'})
+        for lead in valid_leads:
+            # Handle stage history if the module is installed
+            if hasattr(self.env['crm.lead'], 'cr_crm_stage_change_history_ids'):
+                # Update the previous entry's date_out
+                last_history = self.env['cr.crm.stage.change.history'].search([
+                    ('crm_lead_id', '=', lead.id)
+                ], limit=1, order='id desc')
+                if last_history:
+                    last_history.write({
+                        'date_out': fields.Datetime.now(),
+                        'date_out_by_id': self.env.user.id,
+                    })
+
+                # Create a new entry for "Lead" using original creation date
+                self.env['cr.crm.stage.change.history'].create({
+                    'crm_lead_id': lead.id,
+                    'stage_name': _('Lead'),
+                    'date_in': lead.create_date or fields.Datetime.now(),
+                    'date_in_by_id': self.env.user.id,
+                })
+            lead.write({'type': 'lead'})
         
         count = len(valid_leads)
         message = _('One opportunity has been successfully reverted to a lead.') if count == 1 else \
