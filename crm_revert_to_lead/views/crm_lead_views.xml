@@ -13,7 +13,7 @@
                         string="Revert to Lead" 
                         type="object" 
                         class="btn-secondary"
-                        attrs="{'invisible': ['|', ('type', '!=', 'opportunity'), ('stage_sequence', '>', 2)]}"
+                        attrs="{'invisible': [('type', '!=', 'opportunity')]}"
                         groups="sales_team.group_sale_salesman"/>
             </xpath>
         </field>

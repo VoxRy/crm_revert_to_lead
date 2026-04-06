@@ -19,10 +19,9 @@ class CrmRevertLeadWizard(models.TransientModel):
         else:
             return {'type': 'ir.actions.act_window_close'}
 
-        # Filter: only opportunities in the first two stages (sequence <= 2)
-        # and only records that are currently of type 'opportunity'
+        # Filter: only records that are currently of type 'opportunity'
         valid_leads = leads.filtered(
-            lambda l: l.type == 'opportunity' and l.stage_id.sequence <= 2
+            lambda l: l.type == 'opportunity'
         )
 
         if not valid_leads:
